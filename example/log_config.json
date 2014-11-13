@@ -1,0 +1,13 @@
+{
+    "logConfig": {
+        "console": {
+            "level": "info",
+            "colorize": true
+        },
+        "file": {
+            "level": "info",
+            "filename": "application.log"
+        }
+    }
+}
+ 
