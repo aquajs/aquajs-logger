@@ -187,12 +187,12 @@ AquaJsLogger.prototype.getLogger = function () {
  * @return
  */
 
-var PregogLogging = winston.transports.PrecogLogging = function (options) {
+var PrecogLogging = winston.transports.PrecogLogging = function (options) {
 
     //
-    // Pregog Logging
+    // Precog Logging
     //
-    this.name = 'pregogLogging';
+    this.name = 'precogLogging';
     this.level = options.level || 'info';
 };
 
