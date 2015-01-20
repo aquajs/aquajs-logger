@@ -1,31 +1,18 @@
 {
   "name": "aquajs-logger",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "aqua js logger",
   "keywords": [
     "logger"
   ],
   "homepage": "",
   "license": "",
-  "engines": {
-    "node": ">=0.6.0"
-  },
-  "maintainers": [
-    {
-      "name": "xxxxx",
-      "email": "xxxxx"
-    },
-    {
-      "name": "xxxxxx",
-      "email": "xxxxxx"
-    }
-  ],
-  "bugs": {
-    "url": "http://equinix.com/aquajs-logger"
-  },
   "repository": {
     "type": "git",
-    "url": "git://github.com:equinix/gse-common.git"
+    "url": "git://github.com:aquajs/aquajs-logger.git"
+  },
+  "bugs": {
+    "url": "http://equinix.com/aquajs-logger"
   },
   "dependencies": {
     "winston": "^0.8.3"
@@ -33,8 +20,5 @@
   "devDependencies": {
     "nodeunit": "~>0.8.0"
   },
-  "main": "./index.js",
-  "gypfile": true,
-  "readme": "aqua js logger",
-  "readmeFilename": "README.md"
+  "main": "./index.js"
 }
