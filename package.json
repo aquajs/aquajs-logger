@@ -1,18 +1,17 @@
 {
   "name": "aquajs-logger",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "description": "aqua js logger",
-  "keywords": [
-    "logger"
-  ],
-  "homepage": "",
-  "license": "",
+  "license": "ISC",
+  "keywords": [ "logger" ],
+  "main": "./index.js",
+  "homepage": "https://github.com/aquajs/aquajs-logger",
   "repository": {
     "type": "git",
     "url": "git://github.com:aquajs/aquajs-logger.git"
   },
   "bugs": {
-    "url": "http://equinix.com/aquajs-logger"
+    "url": "http://equinix.com/aquajs-logger/issues"
   },
   "dependencies": {
     "winston": "^0.8.3"
@@ -20,5 +19,7 @@
   "devDependencies": {
     "nodeunit": "~>0.8.0"
   },
-  "main": "./index.js"
+  "publishConfig": {
+    "registry": "http://nexus.corp.equinix.com/nexus/content/repositories/Equinix-AquaJS-Release/"
+  }
 }
