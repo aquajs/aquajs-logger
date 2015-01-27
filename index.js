@@ -23,8 +23,7 @@
  */
 
 var winston = require('winston');
-var path = require('path'),
-    util = require('util');
+
 
 /**
  * AquaLogger framework Constructor
