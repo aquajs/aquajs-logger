@@ -3,7 +3,9 @@
   "version": "0.1.5",
   "description": "aqua js logger",
   "license": "ISC",
-  "keywords": [ "logger" ],
+  "keywords": [
+    "logger"
+  ],
   "main": "./index.js",
   "homepage": "https://github.com/aquajs/aquajs-logger",
   "repository": {
@@ -14,10 +16,10 @@
     "url": "http://equinix.com/aquajs-logger/issues"
   },
   "dependencies": {
-    "winston": "^0.8.3"
-  },
-  "devDependencies": {
-    "nodeunit": "~>0.8.0"
+    "winston": "^0.8.3",
+    "winston-cassandra": "^0.1.1",
+    "winston-mail": "^0.3.0",
+    "winston-mongodb": "^0.5.3"
   },
   "publishConfig": {
     "registry": "http://nexus.corp.equinix.com/nexus/content/repositories/Equinix-AquaJS-Release/"
