@@ -21,9 +21,6 @@
     "winston-mail": "^0.3.0",
     "winston-mongodb": "^0.5.3"
   },
-  "devDependencies": {
-    "nodeunit": "~>0.8.0"
-  },
   "publishConfig": {
     "registry": "http://nexus.corp.equinix.com/nexus/content/repositories/Equinix-AquaJS-Release/"
   }
