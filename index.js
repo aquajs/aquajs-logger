@@ -23,7 +23,8 @@
  */
 
 var winston = require('winston');
-
+var path = require('path'),
+    util = require('util');
 
 /**
  * AquaLogger framework Constructor
@@ -72,13 +73,14 @@ AquaJsLogger.prototype.init = function(configArgs) {
                 break;
             case "file":
                 fileCfg = {
+                    timestamp: transCfg.timestamp || "true",
                     filename: transCfg.filename || "application.log",
                     handleExceptions: transCfg.handleExceptions || true,
                     exitOnError: transCfg.exitOnError || false,
                     level: transCfg.level || "info"
                 };
                 logger.add(winston.transports.File, fileCfg);
-                winston.handleExceptions(new winston.transports.File(fileCfg));
+                winston.handleExceptions( new winston.transports.File(fileCfg));
                 break;
             case "rollingFile":
                 fileCfg = {
@@ -89,8 +91,8 @@ AquaJsLogger.prototype.init = function(configArgs) {
                     level: transCfg.level || "info",
                     datePattern: transCfg.datePattern || '.yyyy-MM-ddTHH'
                 };
-                logger.add(new winston.transports.DailyRotateFile(fileCfg));
-                winston.handleExceptions(new winston.transports.DailyRotateFile(fileCfg));
+                logger.add(winston.transports.DailyRotateFile,fileCfg);
+                winston.handleExceptions( new winston.transports.DailyRotateFile(fileCfg));
                 break;
             case "email":
                 var Mail = require('winston-mail').Mail,
@@ -107,7 +109,7 @@ AquaJsLogger.prototype.init = function(configArgs) {
                         silent: transCfg.silent || true
                     };
                 winston.add(Mail, emailCfg);
-                winston.handleExceptions(new winston.transports.File(emailCfg));
+                winston.handleExceptions( new Mail(emailCfg));
                 break;
             case "mongodb":
                 var MongoDB = require('winston-mongodb').MongoDB;
