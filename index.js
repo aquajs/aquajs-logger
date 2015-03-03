@@ -31,8 +31,38 @@ var path = require('path'),
  * @api public
  */
 
-var AquaJsLogger = function() {
-    console.log("Logger created");
+
+
+var ConsoleLogger = winston.transports.ConsoleLogger = function (options) {
+  //
+  // Name this logger
+  //
+  this.name = 'ConsoleLogger';
+
+  //
+  // Set the level from your options
+  //
+  this.level = options.level || 'info';
+
+  //
+  // Configure your storage backing as you see fit
+  //
+};
+
+//
+// Inherit from `winston.Transport` so you can take advantage
+// of the base functionality and `.handleExceptions()`.
+//
+
+util.inherits(ConsoleLogger, winston.Transport);
+
+ConsoleLogger.prototype.log = function (level, msg, meta, callback) {
+  callback(null, true);
+};
+
+
+var AquaJsLogger = function () {
+  console.log("Logger created");
 };
 
 /**
@@ -53,8 +83,8 @@ var AquaJsLogger = function() {
  * @api public
  * @param configArgs
  *
+ * *
  */
-
 
 AquaJsLogger.prototype.init = function(configArgs) {
     var logConfig = configArgs.logConfig,
@@ -63,37 +93,89 @@ AquaJsLogger.prototype.init = function(configArgs) {
     Object.keys(logConfig).forEach(function(key) {
         var transCfg = logConfig[key];
         switch (key) {
-            case "console":
-                logger.add(winston.transports.Console, {
-                    colorize: transCfg.colorize || "true",
-                    timestamp: transCfg.timestamp || "true",
-                    level: transCfg.level || "info",
-                    handleExceptions: true
-                });
-                break;
-            case "file":
-                fileCfg = {
-                    timestamp: transCfg.timestamp || "true",
-                    filename: transCfg.filename || "application.log",
-                    handleExceptions: transCfg.handleExceptions || true,
-                    exitOnError: transCfg.exitOnError || false,
-                    level: transCfg.level || "info"
-                };
-                logger.add(winston.transports.File, fileCfg);
-                winston.handleExceptions( new winston.transports.File(fileCfg));
-                break;
-            case "rollingFile":
-                fileCfg = {
-                    filename: transCfg.filename || "application.log",
-                    name: transCfg.name || "rollingFileAppender",
-                    handleExceptions: transCfg.handleExceptions || true,
-                    exitOnError: transCfg.exitOnError || false,
-                    level: transCfg.level || "info",
-                    datePattern: transCfg.datePattern || '.yyyy-MM-ddTHH'
-                };
-                logger.add(winston.transports.DailyRotateFile,fileCfg);
-                winston.handleExceptions( new winston.transports.DailyRotateFile(fileCfg));
-                break;
+          case "console":
+            logger.add(winston.transports.Console, {
+              colorize: transCfg.colorize || "true",
+              timestamp: transCfg.timestamp || "true",
+              level: transCfg.level || "info",
+              handleExceptions: true,
+              timestamp: function () {
+                now = new Date();
+                year = "" + now.getFullYear();
+                month = "" + (now.getMonth() + 1);
+                if (month.length == 1) { month = "0" + month; }
+                day = "" + now.getDate();
+                if (day.length == 1) { day = "0" + day; }
+                hour = "" + now.getHours();
+                if (hour.length == 1) { hour = "0" + hour; }
+                minute = "" + now.getMinutes();
+                if (minute.length == 1) { minute = "0" + minute; }
+                second = "" + now.getSeconds();
+                if (second.length == 1) { second = "0" + second; }
+                milliseconds = "" + now.getMilliseconds();
+                if (milliseconds.length == 1) { milliseconds = "0" + milliseconds; }
+                return month + "-" + day + "-" + year + " " + hour + ":" + minute + ":" + second + ":" + milliseconds;
+              }
+            });
+            break;
+          case "file":
+            fileCfg = {
+              filename: transCfg.filename || "application.log",
+              handleExceptions: transCfg.handleExceptions || true,
+              exitOnError: transCfg.exitOnError || false,
+              json: false,
+              level: transCfg.level || "info",
+              timestamp: transCfg.timestampFormat || function () {
+                now = new Date();
+                year = "" + now.getFullYear();
+                month = "" + (now.getMonth() + 1);
+                if (month.length == 1) { month = "0" + month; }
+                day = "" + now.getDate();
+                if (day.length == 1) { day = "0" + day; }
+                hour = "" + now.getHours();
+                if (hour.length == 1) { hour = "0" + hour; }
+                minute = "" + now.getMinutes();
+                if (minute.length == 1) { minute = "0" + minute; }
+                second = "" + now.getSeconds();
+                if (second.length == 1) { second = "0" + second; }
+                milliseconds = "" + now.getMilliseconds();
+                if (milliseconds.length == 1) { milliseconds = "0" + milliseconds; }
+                return month + "-" + day + "-" + year + " " + hour + ":" + minute + ":" + second + ":" + milliseconds;
+              }
+            };
+            logger.add(winston.transports.File, fileCfg);
+            winston.handleExceptions(new winston.transports.File(fileCfg));
+            break;
+          case "rollingFile":
+            fileCfg = {
+              filename: transCfg.filename || "application.log",
+              name: transCfg.name || "rollingFileAppender",
+              handleExceptions: transCfg.handleExceptions || true,
+              exitOnError: transCfg.exitOnError || false,
+              level: transCfg.level || "info",
+              json: false,
+              datePattern: transCfg.datePattern || '.yyyy-MM-ddTHH',
+              timestamp: transCfg.timestampFormat || function () {
+                now = new Date();
+                year = "" + now.getFullYear();
+                month = "" + (now.getMonth() + 1);
+                if (month.length == 1) { month = "0" + month; }
+                day = "" + now.getDate();
+                if (day.length == 1) { day = "0" + day; }
+                hour = "" + now.getHours();
+                if (hour.length == 1) { hour = "0" + hour; }
+                minute = "" + now.getMinutes();
+                if (minute.length == 1) { minute = "0" + minute; }
+                second = "" + now.getSeconds();
+                if (second.length == 1) { second = "0" + second; }
+                milliseconds = "" + now.getMilliseconds();
+                if (milliseconds.length == 1) { milliseconds = "0" + milliseconds; }
+                return month + "-" + day + "-" + year + " " + hour + ":" + minute + ":" + second + ":" + milliseconds;
+              }
+            };
+            logger.add(winston.transports.DailyRotateFile, fileCfg);
+            winston.handleExceptions(new winston.transports.DailyRotateFile(fileCfg));
+            break;
             case "email":
                 var Mail = require('winston-mail').Mail,
                     emailCfg = {
@@ -139,6 +221,7 @@ AquaJsLogger.prototype.init = function(configArgs) {
     });
     this.winston = winston;
     this.logger = logger;
+
 };
 
 /**
@@ -148,14 +231,15 @@ AquaJsLogger.prototype.init = function(configArgs) {
  * @see
  * @return
  */
-AquaJsLogger.prototype.getWinston = function() {
-    // will be undefined if init not called first
-    return this.winston;
+
+AquaJsLogger.prototype.getWinston = function () {
+  // will be undefined if init not called first
+  return this.winston;
 };
 
-AquaJsLogger.prototype.getLogger = function() {
-    // will be undefined if init not called first
-    return this.logger;
+AquaJsLogger.prototype.getLogger = function () {
+  // will be undefined if init not called first
+  return this.logger;
 };
 
 //Export the singleton AquaJSLogger Instance which will be used through require('AquaJSLogger')
