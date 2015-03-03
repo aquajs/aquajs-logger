@@ -23,12 +23,43 @@
  */
 
 var winston = require('winston');
-
+var path = require('path'),
+    util = require('util');
 
 /**
  * AquaLogger framework Constructor
  * @api public
  */
+
+
+
+var ConsoleLogger = winston.transports.ConsoleLogger = function (options) {
+    //
+    // Name this logger
+    //
+    this.name = 'ConsoleLogger';
+
+    //
+    // Set the level from your options
+    //
+    this.level = options.level || 'info';
+
+    //
+    // Configure your storage backing as you see fit
+    //
+};
+
+//
+// Inherit from `winston.Transport` so you can take advantage
+// of the base functionality and `.handleExceptions()`.
+//
+
+util.inherits(ConsoleLogger, winston.Transport);
+
+ConsoleLogger.prototype.log = function (level, msg, meta, callback) {
+    callback(null, true);
+};
+
 
 var AquaJsLogger = function() {
     console.log("Logger created");
@@ -63,11 +94,22 @@ AquaJsLogger.prototype.init = function(configArgs) {
         var transCfg = logConfig[key];
         switch (key) {
             case "console":
-                logger.add(winston.transports.Console, {
+                logger.add(ConsoleLogger,  {
                     colorize: transCfg.colorize || "true",
                     timestamp: transCfg.timestamp || "true",
                     level: transCfg.level || "info",
-                    handleExceptions: true
+                    handleExceptions: true,
+                    timestamp: function() {
+                        now = new Date();
+                        year = "" + now.getFullYear();
+                        month = "" + (now.getMonth() + 1); if (month.length == 1) { month = "0" + month; }
+                        day = "" + now.getDate(); if (day.length == 1) { day = "0" + day; }
+                        hour = "" + now.getHours(); if (hour.length == 1) { hour = "0" + hour; }
+                        minute = "" + now.getMinutes(); if (minute.length == 1) { minute = "0" + minute; }
+                        second = "" + now.getSeconds(); if (second.length == 1) { second = "0" + second; }
+                        milliseconds = "" + now.getMilliseconds(); if (milliseconds.length == 1) { milliseconds = "0" + milliseconds; }
+                        return month + "-" + day + "-" + year + " " + hour + ":" + minute + ":" + second+ ":" + milliseconds;
+                    }
                 });
                 break;
             case "file":
@@ -75,10 +117,22 @@ AquaJsLogger.prototype.init = function(configArgs) {
                     filename: transCfg.filename || "application.log",
                     handleExceptions: transCfg.handleExceptions || true,
                     exitOnError: transCfg.exitOnError || false,
-                    level: transCfg.level || "info"
+                    json: false,
+                    level: transCfg.level || "info",
+                    timestamp: transCfg.timestampFormat||function() {
+                        now = new Date();
+                        year = "" + now.getFullYear();
+                        month = "" + (now.getMonth() + 1); if (month.length == 1) { month = "0" + month; }
+                        day = "" + now.getDate(); if (day.length == 1) { day = "0" + day; }
+                        hour = "" + now.getHours(); if (hour.length == 1) { hour = "0" + hour; }
+                        minute = "" + now.getMinutes(); if (minute.length == 1) { minute = "0" + minute; }
+                        second = "" + now.getSeconds(); if (second.length == 1) { second = "0" + second; }
+                        milliseconds = "" + now.getMilliseconds(); if (milliseconds.length == 1) { milliseconds = "0" + milliseconds; }
+                        return month + "-" + day + "-" + year + " " + hour + ":" + minute + ":" + second+ ":" + milliseconds;
+                    }
                 };
                 logger.add(winston.transports.File, fileCfg);
-                winston.handleExceptions(new winston.transports.File(fileCfg));
+                winston.handleExceptions( new winston.transports.File(fileCfg));
                 break;
             case "rollingFile":
                 fileCfg = {
@@ -87,10 +141,22 @@ AquaJsLogger.prototype.init = function(configArgs) {
                     handleExceptions: transCfg.handleExceptions || true,
                     exitOnError: transCfg.exitOnError || false,
                     level: transCfg.level || "info",
-                    datePattern: transCfg.datePattern || '.yyyy-MM-ddTHH'
+                    json: false,
+                    datePattern: transCfg.datePattern || '.yyyy-MM-ddTHH',
+                    timestamp: transCfg.timestampFormat||function() {
+                        now = new Date();
+                        year = "" + now.getFullYear();
+                        month = "" + (now.getMonth() + 1); if (month.length == 1) { month = "0" + month; }
+                        day = "" + now.getDate(); if (day.length == 1) { day = "0" + day; }
+                        hour = "" + now.getHours(); if (hour.length == 1) { hour = "0" + hour; }
+                        minute = "" + now.getMinutes(); if (minute.length == 1) { minute = "0" + minute; }
+                        second = "" + now.getSeconds(); if (second.length == 1) { second = "0" + second; }
+                        milliseconds = "" + now.getMilliseconds(); if (milliseconds.length == 1) { milliseconds = "0" + milliseconds; }
+                        return month + "-" + day + "-" + year + " " + hour + ":" + minute + ":" + second+ ":" + milliseconds;
+                    }
                 };
-                logger.add(new winston.transports.DailyRotateFile(fileCfg));
-                winston.handleExceptions(new winston.transports.DailyRotateFile(fileCfg));
+                logger.add(winston.transports.DailyRotateFile,fileCfg);
+                winston.handleExceptions( new winston.transports.DailyRotateFile(fileCfg));
                 break;
             case "email":
                 var Mail = require('winston-mail').Mail,
@@ -107,7 +173,7 @@ AquaJsLogger.prototype.init = function(configArgs) {
                         silent: transCfg.silent || true
                     };
                 winston.add(Mail, emailCfg);
-                winston.handleExceptions(new winston.transports.File(emailCfg));
+                winston.handleExceptions( new Mail(emailCfg));
                 break;
             case "mongodb":
                 var MongoDB = require('winston-mongodb').MongoDB;
@@ -146,6 +212,7 @@ AquaJsLogger.prototype.init = function(configArgs) {
  * @see
  * @return
  */
+
 AquaJsLogger.prototype.getWinston = function() {
     // will be undefined if init not called first
     return this.winston;
