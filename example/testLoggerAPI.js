@@ -1,6 +1,6 @@
 var loggerConfig = require('./log_config.json');
 
-AquaJsLogger =require('aquajs-logger');
+AquaJsLogger =require('../index.js');
 
 AquaJsLogger.init(loggerConfig);
 
