@@ -25,8 +25,9 @@
 var winston = require('winston');
 var path = require('path'),
     util = require('util');
-global.$apppId;
 //appId is used specifically for identifying the application
+global.$appid;
+
 /**
  * AquaLogger framework Constructor
  * @api public
@@ -60,13 +61,13 @@ var AquaJsLogger = function () {
  * *
  */
 
-AquaJsLogger.prototype.init = function(configArgs,appId) {
+AquaJsLogger.prototype.init = function (configArgs, appId) {
   var logConfig = configArgs.logConfig,
       logger = new winston.Logger(),
       fileCfg,
-      $apppId = appId ? $appId:"aquaLogger";
+      $appid = appId ? $appId : "aquaLogger";
 
-  Object.keys(logConfig).forEach(function(key) {
+  Object.keys(logConfig).forEach(function (key) {
     var transCfg = logConfig[key];
     switch (key) {
       case "console":
@@ -75,10 +76,10 @@ AquaJsLogger.prototype.init = function(configArgs,appId) {
           timestamp: transCfg.timestamp || true,
           level: transCfg.level || "debug",
           handleExceptions: true,
-          timestamp:  transCfg.timestamp || getCustomTimeStamp,
-          formatter: function(options) {
+          timestamp: transCfg.timestamp || getCustomTimeStamp,
+          formatter: function (options) {
             // Return string will be passed to logger.
-            return options.timestamp() + ' ' + $apppId + ' '
+            return options.timestamp() + ' ' + $appid + ' '
                 + options.level.toUpperCase() + ' '
                 + (undefined !== options.message ? options.message : '')
                 + (options.meta && Object.keys(options.meta).length ? '\n\t'
@@ -93,10 +94,10 @@ AquaJsLogger.prototype.init = function(configArgs,appId) {
           exitOnError: transCfg.exitOnError || false,
           json: false,
           level: transCfg.level || "info",
-          timestamp:  transCfg.timestamp || getCustomTimeStamp,
-          formatter: function(options) {
+          timestamp: transCfg.timestamp || getCustomTimeStamp,
+          formatter: function (options) {
             // Return string will be passed to logger.
-            return options.timestamp() + ' ' + $apppId + ' '
+            return options.timestamp() + ' ' + $appid + ' '
                 + options.level.toUpperCase() + ' '
                 + (undefined !== options.message ? options.message : '')
                 + (options.meta && Object.keys(options.meta).length ? '\n\t'
@@ -114,10 +115,10 @@ AquaJsLogger.prototype.init = function(configArgs,appId) {
           level: transCfg.level || "info",
           json: false,
           datePattern: transCfg.datePattern || '.yyyy-MM-ddTHH',
-          timestamp:  transCfg.timestamp || getCustomTimeStamp,
-          formatter: function(options) {
+          timestamp: transCfg.timestamp || getCustomTimeStamp,
+          formatter: function (options) {
             // Return string will be passed to logger.
-            return options.timestamp() + ' ' + $apppId + ' '
+            return options.timestamp() + ' ' + $appid + ' '
                 + options.level.toUpperCase() + ' '
                 + (undefined !== options.message ? options.message : '')
                 + (options.meta && Object.keys(options.meta).length ? '\n\t'
@@ -167,9 +168,9 @@ AquaJsLogger.prototype.init = function(configArgs,appId) {
         break;
       case "logIo":
         var LogIo = require('winston-logio');
-        logger.add(LogIo.Logio,  {
+        logger.add(LogIo.Logio, {
           level: 'info',
-          port: transCfg.port|| 28777,
+          port: transCfg.port || 28777,
           node_name: transCfg.node_name,
           host: transCfg.host
         });
@@ -200,7 +201,7 @@ AquaJsLogger.prototype.getLogger = function () {
   return this.logger;
 };
 
-var getCustomTimeStamp = function (){
+var getCustomTimeStamp = function () {
   now = new Date();
   year = "" + now.getFullYear();
   month = "" + (now.getMonth() + 1);
