@@ -26,7 +26,7 @@ var winston = require('winston');
 var path = require('path'),
     util = require('util');
 //appId is used specifically for identifying the application
-global.$appid;
+global.$appid = "aquajs-logger";
 
 /**
  * AquaLogger framework Constructor
