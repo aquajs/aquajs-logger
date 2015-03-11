@@ -25,7 +25,8 @@
 var winston = require('winston');
 var path = require('path'),
     util = require('util');
-
+global.$apppId;
+//appId is used specifically for identifying the application
 /**
  * AquaLogger framework Constructor
  * @api public
@@ -33,37 +34,8 @@ var path = require('path'),
 
 
 
-var ConsoleLogger = winston.transports.ConsoleLogger = function (options) {
-  //
-  // Name this logger
-  //
-  this.name = 'ConsoleLogger';
-
-  //
-  // Set the level from your options
-  //
-  this.level = options.level || 'info';
-
-  //
-  // Configure your storage backing as you see fit
-  //
-};
-
-//
-// Inherit from `winston.Transport` so you can take advantage
-// of the base functionality and `.handleExceptions()`.
-//
-
-util.inherits(ConsoleLogger, winston.Transport);
-
-ConsoleLogger.prototype.log = function (level, msg, meta, callback) {
-  callback(null, true);
-};
-
-var loggerIndex = null;
-
 var AquaJsLogger = function () {
-  loggerIndex = 1;
+
   console.log("Logger created");
 };
 
@@ -88,14 +60,11 @@ var AquaJsLogger = function () {
  * *
  */
 
-AquaJsLogger.prototype.init = function(configArgs) {
+AquaJsLogger.prototype.init = function(configArgs,appId) {
   var logConfig = configArgs.logConfig,
       logger = new winston.Logger(),
-      fileCfg;
-
-  logger.on('logging', function (transport, level, msg, meta) {
-    loggerIndex ++;
-  });
+      fileCfg,
+      $apppId = appId ? $appId:"aquaLogger";
 
   Object.keys(logConfig).forEach(function(key) {
     var transCfg = logConfig[key];
@@ -104,12 +73,12 @@ AquaJsLogger.prototype.init = function(configArgs) {
         logger.add(winston.transports.Console, {
           colorize: transCfg.colorize || true,
           timestamp: transCfg.timestamp || true,
-          level: transCfg.level || "info",
+          level: transCfg.level || "debug",
           handleExceptions: true,
           timestamp:  transCfg.timestamp || getCustomTimeStamp,
           formatter: function(options) {
             // Return string will be passed to logger.
-            return options.timestamp() + ' microservice-' + loggerIndex + ' '
+            return options.timestamp() + ' ' + $apppId + ' '
                 + options.level.toUpperCase() + ' '
                 + (undefined !== options.message ? options.message : '')
                 + (options.meta && Object.keys(options.meta).length ? '\n\t'
@@ -127,7 +96,7 @@ AquaJsLogger.prototype.init = function(configArgs) {
           timestamp:  transCfg.timestamp || getCustomTimeStamp,
           formatter: function(options) {
             // Return string will be passed to logger.
-            return options.timestamp() + ' microservice-' + loggerIndex + ' '
+            return options.timestamp() + ' ' + $apppId + ' '
                 + options.level.toUpperCase() + ' '
                 + (undefined !== options.message ? options.message : '')
                 + (options.meta && Object.keys(options.meta).length ? '\n\t'
@@ -148,7 +117,7 @@ AquaJsLogger.prototype.init = function(configArgs) {
           timestamp:  transCfg.timestamp || getCustomTimeStamp,
           formatter: function(options) {
             // Return string will be passed to logger.
-            return options.timestamp() + ' microservice-' + loggerIndex + ' '
+            return options.timestamp() + ' ' + $apppId + ' '
                 + options.level.toUpperCase() + ' '
                 + (undefined !== options.message ? options.message : '')
                 + (options.meta && Object.keys(options.meta).length ? '\n\t'
