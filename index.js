@@ -89,7 +89,7 @@ AquaJsLogger.prototype.init = function (configArgs, appId) {
         break;
       case "file":
         fileCfg = {
-          filename: transCfg.filename || "application.log",
+          filename: process.env.LOG_CONFIG_PATH || transCfg.filename || "application.log",
           handleExceptions: transCfg.handleExceptions || true,
           exitOnError: transCfg.exitOnError || false,
           json: false,
@@ -108,7 +108,7 @@ AquaJsLogger.prototype.init = function (configArgs, appId) {
         break;
       case "rollingFile":
         fileCfg = {
-          filename: transCfg.filename || "application.log",
+          filename:  process.env.LOG_CONFIG_PATH || transCfg.filename || "application.log",
           name: transCfg.name || "rollingFileAppender",
           handleExceptions: transCfg.handleExceptions || true,
           exitOnError: transCfg.exitOnError || false,
