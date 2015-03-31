@@ -75,7 +75,7 @@ AquaJsLogger.prototype.init = function (configArgs, appId) {
           colorize: transCfg.colorize || true,
           timestamp: transCfg.timestamp || true,
           level: transCfg.level || "debug",
-          handleExceptions: true,
+          handleExceptions: false,
           timestamp: transCfg.timestamp || getCustomTimeStamp,
           formatter: function (options) {
             // Return string will be passed to logger.
@@ -90,8 +90,8 @@ AquaJsLogger.prototype.init = function (configArgs, appId) {
       case "file":
         fileCfg = {
           filename: process.env.LOG_CONFIG_PATH || transCfg.filename || "application.log",
-          handleExceptions: transCfg.handleExceptions || true,
-          exitOnError: transCfg.exitOnError || false,
+          handleExceptions: false,
+          exitOnError: false,
           json: false,
           level: transCfg.level || "info",
           timestamp: transCfg.timestamp || getCustomTimeStamp,
@@ -110,8 +110,8 @@ AquaJsLogger.prototype.init = function (configArgs, appId) {
         fileCfg = {
           filename:  process.env.LOG_CONFIG_PATH || transCfg.filename || "application.log",
           name: transCfg.name || "rollingFileAppender",
-          handleExceptions: transCfg.handleExceptions || true,
-          exitOnError: transCfg.exitOnError || false,
+          handleExceptions: false,
+          exitOnError: false,
           level: transCfg.level || "info",
           json: false,
           datePattern: transCfg.datePattern || '.yyyy-MM-ddTHH',
