@@ -10,16 +10,20 @@
         },
         "email": {
             "level": "error",
-            "to": "",
-            "from":"ramp@equinix.com",
-            "host":"mailhost.corp.equinix.com",
-            "port": "25",
-            "username":"",
-            "password":""
+            "to": "aqaujsadmin@equninix.com",
+            "from": "aqaujsadmin@equninix.com",
+            "host": "",
+            "port": "",
+            "username": "",
+            "password": "",
+            "transport": {
+                "service": "",
+                "auth": {
+                    "user": "",
+                    "pass": ""
+                }
+            }
         }
-
-
 
     }
 }
-
