@@ -10,8 +10,8 @@
         },
         "email": {
             "level": "error",
-            "to": "aqaujsadmin@equninix.com",
-            "from": "aqaujsadmin@equninix.com",
+            "to": "aqaujsadmin@equninix.com",//uses the email address for receivers
+            "from": "aqaujsadmin@equninix.com",//sender address
             "host": "",
             "port": "",
             "username": "",
