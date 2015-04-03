@@ -7,7 +7,23 @@
         "file": {
             "level": "info",
             "filename": "application.log"
+        },
+        "email": {
+            "level": "error",
+            "to": "aqaujsadmin@equninix.com",//uses the email address for receivers
+            "from": "aqaujsadmin@equninix.com",//sender address
+            "host": "",
+            "port": "",
+            "username": "",
+            "password": "",
+            "transport": {
+                "service": "",
+                "auth": {
+                    "user": "",
+                    "pass": ""
+                }
+            }
         }
+
     }
 }
- 
