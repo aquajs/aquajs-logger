@@ -130,18 +130,16 @@ AquaJsLogger.prototype.init = function (configArgs, appId) {
       case "email":
         var Mail = require('winston-mail').Mail,
             emailCfg = {
-              to: transCfg.to || "aqaujsadmin@equninix.com",
-              from: transCfg.from || "aqaujsadmin@equninix.com",
               host: transCfg.host,
               port: transCfg.port,
+              to: transCfg.to,
+              from: transCfg.from,
               username: transCfg.username,
               password: transCfg.password,
               ssl: transCfg.ssl,
-              tls: transCfg.tls,
-              level: transCfg.level || "error",
-              silent: transCfg.silent || true
+              level: transCfg.level || "error"
             };
-        winston.add(Mail, emailCfg);
+        logger.add(Mail, emailCfg);
         break;
       case "mongodb":
         var MongoDB = require('winston-mongodb').MongoDB;
