@@ -9,21 +9,15 @@
             "filename": "application.log"
         },
         "email": {
-            "level": "error",
-            "to": "aqaujsadmin@equninix.com",//uses the email address for receivers
-            "from": "aqaujsadmin@equninix.com",//sender address
             "host": "",
             "port": "",
+            "ssl": true,
+            "to": "aqaujsadmin@equninix.com",
+            "from": "aqaujsadmin@equninix.com",
             "username": "",
             "password": "",
-            "transport": {
-                "service": "",
-                "auth": {
-                    "user": "",
-                    "pass": ""
-                }
-            }
+            "subject": "AquaJS Error:",
+            "level": "error"
         }
-
     }
 }
