@@ -37,7 +37,7 @@ global.$appid = "aquajs-logger";
 
 var AquaJsLogger = function () {
 
-  console.log("Logger created");
+  //console.log("Logger created");
 };
 
 /**
