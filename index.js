@@ -64,8 +64,7 @@ var AquaJsLogger = function () {
 AquaJsLogger.prototype.init = function (configArgs, appId) {
   var logConfig = configArgs.logConfig,
       logger = new winston.Logger(),
-      fileCfg,
-      $appid = appId ? $appId : "aquaLogger";
+      fileCfg ;
 
   Object.keys(logConfig).forEach(function (key) {
     var transCfg = logConfig[key];
