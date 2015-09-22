@@ -73,7 +73,7 @@ AquaJsLogger.prototype.init = function (configArgs, appId) {
         logger.add(winston.transports.Console, {
           colorize: transCfg.colorize || true,
           timestamp: transCfg.timestamp || true,
-          level: transCfg.level || "debug",
+          level:  getLevel(transCfg.level),
           //handleExceptions: false, enable this flag if you want winston logger to handle uncaught exception.
           timestamp: transCfg.timestamp || getCustomTimeStamp,
           formatter: function (options) {
@@ -89,10 +89,8 @@ AquaJsLogger.prototype.init = function (configArgs, appId) {
       case "file":
         fileCfg = {
           filename: process.env.LOG_CONFIG_PATH || transCfg.filename || "application.log",
-          //handleExceptions: false,
-          //exitOnError: false,
           json: false,
-          level: transCfg.level || "info",
+          level:  getLevel(transCfg.level),
           timestamp: transCfg.timestamp || getCustomTimeStamp,
           formatter: function (options) {
             // Return string will be passed to logger.
@@ -111,7 +109,7 @@ AquaJsLogger.prototype.init = function (configArgs, appId) {
           name: transCfg.name || "rollingFileAppender",
          // handleExceptions: false,
           //exitOnError: false,
-          level: transCfg.level || "info",
+          level: getLevel(transCfg.level),
           json: false,
           datePattern: transCfg.datePattern || '.yyyy-MM-ddTHH',
           timestamp: transCfg.timestamp || getCustomTimeStamp,
@@ -216,5 +214,15 @@ var getCustomTimeStamp = function () {
   return month + "-" + day + "-" + year + " " + hour + ":" + minute + ":" + second + ":" + milliseconds;
 };
 
+
+function getLevel(level){
+	if(!level) {
+		level =  "info";
+    }else if(level.length < 5 ) {
+		level = " "+level;
+    }
+    return level;
+}
+ 
 //Export the singleton AquaJSLogger Instance which will be used through require('AquaJSLogger')
 module.exports = new AquaJsLogger();
