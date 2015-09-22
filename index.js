@@ -206,9 +206,9 @@ var getCustomTimeStamp = function () {
   hour = "" + now.getHours();
   if (hour.length == 1) { hour = "0" + hour; }
   minute = "" + now.getMinutes();
-  if (minute.length == 1 || minute.length == 2) { minute = "0" + minute; }
+  if (minute.length == 1 ) { minute = "0" + minute; }
   second = "" + now.getSeconds();
-  if (second.length == 1 ||  second.length == 2 ) { second = "0" + second; }
+  if (second.length == 1  ) { second = "0" + second; }
   milliseconds = "" + now.getMilliseconds();
   if (milliseconds.length == 1 || milliseconds.length == 2) { milliseconds = "0" + milliseconds; }
   return month + "-" + day + "-" + year + " " + hour + ":" + minute + ":" + second + ":" + milliseconds;
