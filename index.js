@@ -161,6 +161,21 @@ AquaJsLogger.prototype.init = function (configArgs, appId) {
                     keyspace: transCfg.keyspace
                 });
                 break;
+            case "elasticSearch":
+                var elasticSearch = require('winston-elasticsearch');
+                winston.add(Cassandra, {
+                    level: transCfg.level,
+                    indexPrefix : transCfg.indexPrefix ,
+                    indexSuffixPattern : transCfg.indexSuffixPattern ,
+                    messageType : transCfg.messageType ,
+                    fireAndForget : transCfg.fireAndForget ,
+                    ensureMappingTemplate  : transCfg.ensureMappingTemplate  ,
+                    mappingTemplate : transCfg.mappingTemplate ,
+                    client : transCfg.client ,
+                    clientOpts : transCfg.clientOpts ,
+                    consistency : transCfg.consistency
+                });
+                break;
             case "logIo":
                 var LogIo = require('winston-logio');
                 logger.add(LogIo.Logio, {
