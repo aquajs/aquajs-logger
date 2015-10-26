@@ -74,7 +74,7 @@ AquaJsLogger.prototype.init = function (configArgs, appId) {
                     colorize: transCfg.colorize || true,
                     timestamp: transCfg.timestamp || true,
                     level: transCfg.level || "debug",
-					json: false || transCfg.json,
+		    json: transCfg.json  || false ,
                     //handleExceptions: false, enable this flag if you want winston logger to handle uncaught exception.
                     timestamp: transCfg.timestamp || getCustomTimeStamp,
                     formatter: function (options) {
@@ -93,7 +93,7 @@ AquaJsLogger.prototype.init = function (configArgs, appId) {
                     json: false,
                     level: transCfg.level || "info",
                     timestamp: transCfg.timestamp || getCustomTimeStamp,
-					json: false || transCfg.json,
+		    json: transCfg.json  || false ,
                     formatter: function (options) {
                         // Return string will be passed to logger.
                         return options.timestamp() + ' ' + $appid + ' '
@@ -112,7 +112,7 @@ AquaJsLogger.prototype.init = function (configArgs, appId) {
                     // handleExceptions: false,
                     //exitOnError: false,
                     level: transCfg.level || "info",
-                    json: false || transCfg.json,
+                    json: transCfg.json  || false ,
                     datePattern: transCfg.datePattern || '.yyyy-MM-ddTHH',
                     timestamp: transCfg.timestamp || getCustomTimeStamp,
                     formatter: function (options) {
@@ -133,7 +133,7 @@ AquaJsLogger.prototype.init = function (configArgs, appId) {
                         port: transCfg.port,
                         to: transCfg.to,
                         from: transCfg.from,
-						json: false || transCfg.json,	 
+			json: transCfg.json  || false ,	 
                         username: transCfg.username,
                         password: transCfg.password,
                         ssl: transCfg.ssl,
@@ -146,7 +146,7 @@ AquaJsLogger.prototype.init = function (configArgs, appId) {
                 winston.add(MongoDB, {
                     level: transCfg.level || "info",
                     silent: transCfg.silent || true,
-                    json: false || transCfg.json,
+                    json: transCfg.json  || false ,
                     db: transCfg.db,
                     collection: transCfg.collection,
                     safe: transCfg.safe,
@@ -158,7 +158,7 @@ AquaJsLogger.prototype.init = function (configArgs, appId) {
                 var Cassandra = require('winston-cassandra').Cassandra;
                 winston.add(Cassandra, {
                     level: transCfg.level,
-					json: false || transCfg.json,	 
+		    json: transCfg.json  || false ,	 
                     table: transCfg.table,
                     partitionBy: transCfg.partitionBy,
                     consistency: transCfg.consistency,
