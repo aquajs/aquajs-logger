@@ -90,7 +90,6 @@ AquaJsLogger.prototype.init = function (configArgs, appId) {
             case "file":
                 fileCfg = {
                     filename: process.env.LOG_CONFIG_PATH || transCfg.filename || "application.log",
-                    json: false,
                     level: transCfg.level || "info",
                     timestamp: transCfg.timestamp || getCustomTimeStamp,
 		    json: transCfg.json  || false ,
