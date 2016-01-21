@@ -24,7 +24,8 @@
 
 var winston = require('winston');
 var path = require('path'),
-    util = require('util');
+    util = require('util'),
+    jsonSafeStringify = require('json-stringify-safe');
 //appId is used specifically for identifying the application
 global.$appid = "";
 
@@ -83,7 +84,7 @@ AquaJsLogger.prototype.init = function (configArgs, appId) {
                             + getLevel(options.level.toUpperCase()) + ' '
                             + (undefined !== options.message ? options.message : '')
                             + (options.meta && Object.keys(options.meta).length ? '\n\t'
-                            + JSON.stringify(options.meta) : '');
+                            + jsonSafeStringify(options.meta) : '');
                     }
                 });
                 break;
@@ -99,7 +100,7 @@ AquaJsLogger.prototype.init = function (configArgs, appId) {
                             + getLevel(options.level.toUpperCase()) + ' '
                             + (undefined !== options.message ? options.message : '')
                             + (options.meta && Object.keys(options.meta).length ? '\n\t'
-                            + JSON.stringify(options.meta) : '');
+                            + jsonSafeStringify(options.meta) : '');
                     }
                 };
                 logger.add(winston.transports.File, fileCfg);
@@ -120,7 +121,7 @@ AquaJsLogger.prototype.init = function (configArgs, appId) {
                             + getLevel(options.level.toUpperCase()) + ' '
                             + (undefined !== options.message ? options.message : '')
                             + (options.meta && Object.keys(options.meta).length ? '\n\t'
-                            + JSON.stringify(options.meta) : '');
+                            + jsonSafeStringify(options.meta) : '');
                     }
                 };
                 logger.add(winston.transports.DailyRotateFile, fileCfg);

@@ -19,7 +19,8 @@
     "winston": "^0.9.0",
     "winston-cassandra": "^0.1.1",
     "winston-mail": "^0.3.0",
-    "winston-mongodb": "^0.5.3"
+    "winston-mongodb": "^0.5.3",
+    "json-stringify-safe":"^5.0.1"
   },
   "publishConfig": {
     "registry": "http://nexus.corp.equinix.com/nexus/content/repositories/Equinix-AquaJS-Release/"
