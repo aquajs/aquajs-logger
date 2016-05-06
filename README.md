@@ -29,15 +29,15 @@ logger.error ("Invalid Data Type");
 Other Logger Configuration Attributes :
 
   - Console logging attributes:
-               colorize, timestamp, level , handleExceptions;
+               `colorize`, `timestamp`, `level`, `handleExceptions`;
   - File logging attributes:
-             filename, handleExceptions, exitOnError, level;
+             `filename`, `handleExceptions`, `exitOnError`, `level`;
   - RollingFile logging attributes:
-             filename, name, handleExceptions, exitOnError, level, datePattern;
+             `filename`, `name`, `handleExceptions`, `exitOnError`, `level`, `datePattern`;
   - Email logging attributes:
-             to, from, host, port, username, password, ssl, tls, level, silent;
+             `to`, `from`, `host`, `port`, `username`, `password`, `ssl`, `tls`, `level`, `silent`;
   - Cassandra logging attributes:
-           level, table, partitionBy, consistency, hosts, keyspace;
+           `level`, `table`, `partitionBy`, `consistency`, `hosts`, `keyspace`;
   - Mongo DB logging attributes:
-         level, silent, db, collection, safe, host, port.
+         `level`, `silent`, `db`, `collection`, `safe`, `host`, `port`.
 
