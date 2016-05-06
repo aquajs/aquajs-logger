@@ -3,12 +3,9 @@
 Aqua JS Logger framework:
 Currently Aqua Js Logging Framework supports logging to Console, File, Rolling File, Email, PREGOG, MongoDB, Redis, Database Logging .
 
-Configuration :
-
-specify the logger config for the environment :
+Configuration (specify the logger config for the environment) :
 
 Simple example - a logger for console and file logging :
-
   - sample log_config.json is provided by the framework.
 ```javascript
 var loggerConfig = require('./log_config.json');
