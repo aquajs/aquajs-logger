@@ -26,9 +26,10 @@
     "Namratha Ambekar <nambekar@equinix.com>"
   ],
   "dependencies": {
-    "winston": "0.9.0",
+    "winston": "2.2.0",
     "winston-cassandra": "0.1.1",
-    "winston-mail": "0.3.0",
+    "winston-mail": "1.2.0",
+    "winston-daily-rotate-file": "1.1.4",
     "winston-mongodb": "0.5.3",
     "json-stringify-safe":"5.0.1"
   },

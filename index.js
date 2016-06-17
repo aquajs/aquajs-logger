@@ -25,7 +25,8 @@
 var winston = require('winston');
 var path = require('path'),
     util = require('util'),
-    jsonSafeStringify = require('json-stringify-safe');
+    jsonSafeStringify = require('json-stringify-safe'),
+    rotateFile = require('winston-daily-rotate-file');
 //appId is used specifically for identifying the application
 global.$appid = "";
 
@@ -124,7 +125,8 @@ AquaJsLogger.prototype.init = function (configArgs, appId) {
                             + jsonSafeStringify(options.meta) : '');
                     }
                 };
-                logger.add(winston.transports.DailyRotateFile, fileCfg);
+                logger.add(rotateFile, fileCfg);
+                //logger.add(winston.transports.DailyRotateFile, fileCfg);
                 break;
             case "email":
                 var Mail = require('winston-mail').Mail,
