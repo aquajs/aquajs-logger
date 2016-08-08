@@ -24,8 +24,7 @@
 
 var winston = require('winston');
 var path = require('path'),
-    util = require('util'),
-    jsonSafeStringify = require('json-stringify-safe');
+    util = require('util');
 //appId is used specifically for identifying the application
 global.$appid = "";
 
@@ -75,7 +74,6 @@ AquaJsLogger.prototype.init = function (configArgs, appId) {
                     colorize: transCfg.colorize || true,
                     timestamp: transCfg.timestamp || true,
                     level: transCfg.level || "debug",
-		    json: transCfg.json  || false ,
                     //handleExceptions: false, enable this flag if you want winston logger to handle uncaught exception.
                     timestamp: transCfg.timestamp || getCustomTimeStamp,
                     formatter: function (options) {
@@ -84,23 +82,27 @@ AquaJsLogger.prototype.init = function (configArgs, appId) {
                             + getLevel(options.level.toUpperCase()) + ' '
                             + (undefined !== options.message ? options.message : '')
                             + (options.meta && Object.keys(options.meta).length ? '\n\t'
-                            + jsonSafeStringify(options.meta) : '');
+                            + JSON.stringify(options.meta) : '');
                     }
                 });
                 break;
             case "file":
                 fileCfg = {
                     filename: process.env.LOG_CONFIG_PATH || transCfg.filename || "application.log",
+                    json: false,
                     level: transCfg.level || "info",
                     timestamp: transCfg.timestamp || getCustomTimeStamp,
-		    json: transCfg.json  || false ,
+                    maxsize: transCfg.maxsize,
+                    maxFiles:  transCfg.maxFiles,
+                    zippedArchive: transCfg.zippedArchive,
+                    tailable:  transCfg.tailable,
                     formatter: function (options) {
                         // Return string will be passed to logger.
                         return options.timestamp() + ' ' + $appid + ' '
                             + getLevel(options.level.toUpperCase()) + ' '
                             + (undefined !== options.message ? options.message : '')
                             + (options.meta && Object.keys(options.meta).length ? '\n\t'
-                            + jsonSafeStringify(options.meta) : '');
+                            + JSON.stringify(options.meta) : '');
                     }
                 };
                 logger.add(winston.transports.File, fileCfg);
@@ -112,16 +114,20 @@ AquaJsLogger.prototype.init = function (configArgs, appId) {
                     // handleExceptions: false,
                     //exitOnError: false,
                     level: transCfg.level || "info",
-                    json: transCfg.json  || false ,
+                    json: false,
                     datePattern: transCfg.datePattern || '.yyyy-MM-ddTHH',
                     timestamp: transCfg.timestamp || getCustomTimeStamp,
+                    maxsize: transCfg.maxsize,
+                    maxFiles:  transCfg.maxFiles,
+                    zippedArchive: transCfg.zippedArchive,
+                    tailable:  transCfg.tailable,
                     formatter: function (options) {
                         // Return string will be passed to logger.
                         return options.timestamp() + ' ' + $appid + ' '
                             + getLevel(options.level.toUpperCase()) + ' '
                             + (undefined !== options.message ? options.message : '')
                             + (options.meta && Object.keys(options.meta).length ? '\n\t'
-                            + jsonSafeStringify(options.meta) : '');
+                            + JSON.stringify(options.meta) : '');
                     }
                 };
                 logger.add(winston.transports.DailyRotateFile, fileCfg);
@@ -133,7 +139,6 @@ AquaJsLogger.prototype.init = function (configArgs, appId) {
                         port: transCfg.port,
                         to: transCfg.to,
                         from: transCfg.from,
-			json: transCfg.json  || false ,	 
                         username: transCfg.username,
                         password: transCfg.password,
                         ssl: transCfg.ssl,
@@ -146,7 +151,6 @@ AquaJsLogger.prototype.init = function (configArgs, appId) {
                 winston.add(MongoDB, {
                     level: transCfg.level || "info",
                     silent: transCfg.silent || true,
-                    json: transCfg.json  || false ,
                     db: transCfg.db,
                     collection: transCfg.collection,
                     safe: transCfg.safe,
@@ -158,27 +162,11 @@ AquaJsLogger.prototype.init = function (configArgs, appId) {
                 var Cassandra = require('winston-cassandra').Cassandra;
                 winston.add(Cassandra, {
                     level: transCfg.level,
-		    json: transCfg.json  || false ,	 
                     table: transCfg.table,
                     partitionBy: transCfg.partitionBy,
                     consistency: transCfg.consistency,
                     hosts: transCfg.hosts,
                     keyspace: transCfg.keyspace
-                });
-                break;
-            case "elasticSearch":
-                var elasticSearch = require('winston-elasticsearch');
-                winston.add(Cassandra, {
-                    level: transCfg.level,
-                    indexPrefix : transCfg.indexPrefix ,
-                    indexSuffixPattern : transCfg.indexSuffixPattern ,
-                    messageType : transCfg.messageType ,
-                    fireAndForget : transCfg.fireAndForget ,
-                    ensureMappingTemplate  : transCfg.ensureMappingTemplate  ,
-                    mappingTemplate : transCfg.mappingTemplate ,
-                    client : transCfg.client ,
-                    clientOpts : transCfg.clientOpts ,
-                    consistency : transCfg.consistency
                 });
                 break;
             case "logIo":
