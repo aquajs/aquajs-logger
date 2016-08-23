@@ -104,7 +104,7 @@ AquaJsLogger.prototype.init = function (configArgs, appId) {
                             + getLevel(options.level.toUpperCase()) + ' '
                             + (undefined !== options.message ? options.message : '')
                             + (options.meta && Object.keys(options.meta).length ? '\n\t'
-                            + JSON.stringify(options.meta) : '');
+                            +jsonSafeStringify(options.meta) : '');
                     }
                 };
                 logger.add(winston.transports.File, fileCfg);
@@ -129,7 +129,7 @@ AquaJsLogger.prototype.init = function (configArgs, appId) {
                             + getLevel(options.level.toUpperCase()) + ' '
                             + (undefined !== options.message ? options.message : '')
                             + (options.meta && Object.keys(options.meta).length ? '\n\t'
-                            + JSON.stringify(options.meta) : '');
+                            + jsonSafeStringify(options.meta) : '');
                     }
                 };
                 logger.add(rotateFile, fileCfg);

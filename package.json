@@ -1,6 +1,6 @@
 {
   "name": "aquajs-logger",
-  "version": "1.2.2",
+  "version": "1.2.7",
   "description": "aqua js logger",
   "license": "ISC",
   "keywords": [
@@ -10,12 +10,12 @@
   "homepage": "https://github.com/aquajs/aquajs-logger",
   "repository": {
     "type": "git",
-    "url": "git://github.com:aquajs/aquajs-logger.git"
+    "url": "git://github.com/%3Aaquajs/aquajs-logger.git"
   },
   "bugs": {
     "url": "http://equinix.com/aquajs-logger/issues"
   },
-    "developers": [
+  "developers": [
     "Venkat Rangasamy <vrangasamy@equinix.com>",
     "Aswini Atibudhi <aswini.atbd@gmail.com>",
     "Tony Pujals <tpujals@equinix.com> (http://twitter.com/subfuzion)",
@@ -31,9 +31,33 @@
     "winston-mail": "1.2.0",
     "winston-daily-rotate-file": "1.1.4",
     "winston-mongodb": "0.5.3",
-    "json-stringify-safe":"5.0.1"
+    "json-stringify-safe": "5.0.1"
   },
   "publishConfig": {
     "registry": "http://nexus.corp.equinix.com/nexus/content/repositories/Equinix-AquaJS-Release/"
-  }
+  },
+  "readme": "# Aqua Js Logger\r\n\r\nAqua JS Logger framework:\r\nCurrently Aqua Js Logging Framework supports logging to `Console`, `File`, `Rolling File`, `Email`, `PREGOG`, `MongoDB`, `Redis`, `Database Logging`.\r\n\r\nConfiguration (specify the logger config for the environment) :\r\n\r\nSimple example - a logger for console and file logging :\r\n  - sample log_config.json is provided by the framework.\r\n```javascript\r\nvar loggerConfig = require('./log_config.json');\r\nAquaJsLogger = require('aquajs-logger');\r\nAquaJsLogger.init(loggerConfig);\r\n\r\nlogger = AquaJsLogger.getLogger();\r\nlogger.info(\"get my Details\");\r\n\r\nlogger = require('aquajs-logger').getLogger();\r\nlogger.info(\"get my Details\");\r\n```\r\n\r\nUse the Logger :\r\n```javascript\r\nlogger.info(\"Server Listing on the port:\" + config.port);\r\nlogger.error (\"Invalid Data Type\");\r\n```\r\n\r\nOther Logger Configuration Attributes :\r\n\r\n  - Console logging attributes:\r\n               `colorize`, `timestamp`, `level`, `handleExceptions`;\r\n  - File logging attributes:\r\n             `filename`, `handleExceptions`, `exitOnError`, `level`;\r\n  - RollingFile logging attributes:\r\n             `filename`, `name`, `handleExceptions`, `exitOnError`, `level`, `datePattern`;\r\n  - Email logging attributes:\r\n             `to`, `from`, `host`, `port`, `username`, `password`, `ssl`, `tls`, `level`, `silent`;\r\n  - Cassandra logging attributes:\r\n           `level`, `table`, `partitionBy`, `consistency`, `hosts`, `keyspace`;\r\n  - Mongo DB logging attributes:\r\n         `level`, `silent`, `db`, `collection`, `safe`, `host`, `port`.\r\n\r\n",
+  "readmeFilename": "README.md",
+  "gitHead": "5a3b0efd61e410dfb42c4370b4798b9bac70da31",
+  "_id": "aquajs-logger@1.2.7",
+  "scripts": {},
+  "_shasum": "27fa6d7213c96317ac97f8825c548e138becf5dd",
+  "_from": "aquajs-logger@1.2.7",
+  "_npmVersion": "2.11.3",
+  "_nodeVersion": "0.12.7",
+  "_npmUser": {
+    "name": "aatibudhi",
+    "email": "aatibudhi@equinix.com"
+  },
+  "maintainers": [
+    {
+      "name": "aatibudhi",
+      "email": "aatibudhi@equinix.com"
+    }
+  ],
+  "dist": {
+    "shasum": "27fa6d7213c96317ac97f8825c548e138becf5dd",
+    "tarball": "http://nexus.corp.equinix.com/nexus/content/groups/Equinix-NPM-Release/aquajs-logger/-/aquajs-logger-1.2.7.tgz"
+  },
+  "_resolved": "http://nexus.corp.equinix.com/nexus/content/groups/Equinix-NPM-Release/aquajs-logger/-/aquajs-logger-1.2.7.tgz"
 }
