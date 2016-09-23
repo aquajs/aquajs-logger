@@ -26,7 +26,8 @@ var winston = require('winston');
 var path = require('path'),
     util = require('util');
 //appId is used specifically for identifying the application
-global.$appid = "";
+//use previous defined $appid
+global.$appid = global.$appid || "";
 
 /**
  * AquaLogger framework Constructor
@@ -203,41 +204,21 @@ AquaJsLogger.prototype.getLogger = function () {
     // will be undefined if init not called first
     return this.logger;
 };
-
-var getCustomTimeStamp = function () {
-    now = new Date();
-    year = "" + now.getFullYear();
-    month = "" + (now.getMonth() + 1);
-    if (month.length == 1) {
-        month = "0" + month;
-    }
-    day = "" + now.getDate();
-    if (day.length == 1) {
-        day = "0" + day;
-    }
-    hour = "" + now.getHours();
-    if (hour.length == 1) {
-        hour = "0" + hour;
-    }
-    minute = "" + now.getMinutes();
-    if (minute.length == 1) {
-        minute = "0" + minute ;
-    }
-
-    second = "" + now.getSeconds();
-    if (second.length == 1) {
-        second = "0" + second;
-    }
-
-    milliseconds = "" + now.getMilliseconds();
-    if (milliseconds.length == 1) {
-        milliseconds = "00" + milliseconds;
-    } else if (milliseconds.length == 2) {
-        milliseconds = "0" + milliseconds;
-    }
-    return month + "-" + day + "-" + year + " " + hour + ":" + minute + ":" + second + ":" + milliseconds;
+//Use toLocaleString, to avoid calculations
+function getCustomTimeStamp() {
+    var dateFormat = {
+        day: '2-digit',
+        year: 'numeric',
+        month: '2-digit',
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit',
+        hour12: false
+    };
+    var date = new Date();
+    var dateString = date.toLocaleString(undefined, dateFormat); //first argument(locale) is mandatory
+    return dateString.replace(/[\/,\s]+/g, '-') + ":" + date.getMilliseconds();
 };
-
 
 function getLevel(level) {
     if (!level) {
